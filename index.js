@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require('cors');
 const mongoose = require("mongoose");
-const verify = require('./routes/verifyToken');
 const dotenv = require("dotenv");
 
 dotenv.config();
@@ -28,13 +27,13 @@ mongoose.connect(process.env.MDB_CONNECT, {
   }
 )
 //------------------------//
-
+const passVerify = require('./routes/confirm.password.route');
+const verify = require('./routes/verifyToken').verify;
 //set up routes
-app.get('/api', verify, (req, res)=>{
-  res.json({
-    message: 'shanawaz'
-  })
-})
+app.get('/api',require('./routes/verifyToken').verifyLogin);
+app.use('/api/user/profile',verify,require('./routes/profile.route'));
+app.use('/api/user/changepassword',passVerify, require('./routes/change.password.route'));
+app.use('/api/profile',require('./routes/profile.route'));
 app.use('/api/user',require('./routes/authRoutes'));
 app.use('/api/hr',require('./routes/hrRoutes'));
 app.use('/api/bdm',require('./routes/bdmRoutes'));

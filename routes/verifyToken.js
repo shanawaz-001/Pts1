@@ -1,14 +1,49 @@
 const jwt = require('jsonwebtoken');
-//Auth verification------------------------------------------------------------------------------------
-module.exports = function (req,res,next){
+const User = require('../models/userModel');
+//Login verification------------------------------------------------------------------------------------
+module.exports.verifyLogin = async(req,res,next)=>{
     const token = req.header('authorization');
+    const decode = jwt.decode(token);
     if(!token) return res.status(401).send({ type:'error',message: 'Access Denied'});
     try {
         const verified = jwt.verify(token, process.env.SECRETKEY);
-        req.user = verified;
-        next();
+        if(!verified) return res.status(401).send({ type:'error',message: 'Token Invalid'});
+        const user = await User.findOne({ employeeId: decode.employeeId});
+        const decodePass = decode.password;
+        const userPass = user.passwordHash;  
+        if(decodePass!=userPass){
+            res.send({isLogin:false});
+        } 
+        else{
+            res.send({isLogin:true});
+            next(); 
+        }
+      
     } catch (error) {
-        res.status(400).send({type:'error', message:'Invalid Token'});
+        res.status(400).send({isLogin:false});
+    }
+};
+
+//-------------------------------verify Token-----------------------------------------------------------
+module.exports.verify = async(req,res,next)=>{
+    const token = req.header('authorization');
+    const decode = jwt.decode(token);
+    if(!token) return res.status(401).send({ type:'error',message: 'Access Denied'});
+    try {
+        const verified = jwt.verify(token, process.env.SECRETKEY);
+        if(!verified) return res.status(401).send({ type:'error',message: 'Token Invalid'});
+        const user = await User.findOne({ employeeId: decode.employeeId});
+        const decodePass = decode.password;
+        const userPass = user.passwordHash;  
+        if(decodePass!=userPass){
+            res.status(400).send({type:'error', message:'Please Login token is Invalid'});
+        } 
+        else{
+            next(); 
+        }
+      
+    } catch (error) {
+        res.status(400).send({type:'error', message:'Please Login token is Invalid'});
     }
 };
 
