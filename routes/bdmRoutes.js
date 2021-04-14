@@ -2,7 +2,7 @@ const router = require("express").Router();
 const jwt = require('jsonwebtoken');
 const verify = require('../routes/verifyToken');
 //View Employee
-
+router.get('/emp',verify.BDM, require('../routes/readRoutes').empDev);
 //View Projects
 router.get('/project',verify.BDM, require('../routes/readRoutes').projects);
 //Add project
