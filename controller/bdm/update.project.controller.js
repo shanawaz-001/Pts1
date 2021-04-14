@@ -15,6 +15,6 @@ module.exports = async(req, res)=>{
         
     } catch (error) {
         console.error(error);
-        res.status(500).send({type: 'error', message: 'something went wrong at server'});
+        res.status(500).send({type: 'error', message: 'Error while connecting to the server!'});
     }
 }
