@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const projectTaskSchema = new mongoose.Schema({
     taskId:{
         type: String,
+        unique:[true, 'Already exixts'],
         required: true
     },
     taskDesc:{
@@ -13,7 +14,8 @@ const projectTaskSchema = new mongoose.Schema({
         validate:{
             validator: value =>[ 'Low', 'Normal', 'High'].includes(value),
             message: 'Invalid Priority'
-        }
+        },
+        default: 'Normal'
     },
     startDate:{
         type: Date,
@@ -30,7 +32,8 @@ const projectTaskSchema = new mongoose.Schema({
         validate: {
             validator: value => ["Not started","Active","On-hold","Completed"].includes(value),
             message: 'Invalid Status'
-          }
+          },
+          default: 'Not started'
     },
     projectRef:{
         type: mongoose.Schema.Types.ObjectId, 

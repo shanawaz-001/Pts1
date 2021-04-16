@@ -1,16 +1,14 @@
 const router = require("express").Router();
-const jwt = require('jsonwebtoken');
-const verify = require('../routes/verifyToken');
 //View Employee
-router.get('/emp',verify.BDM, require('../routes/readRoutes').empDev);
+router.get('/emp', require('../routes/readRoutes').empDev);
 //View Projects
-router.get('/project',verify.BDM, require('../routes/readRoutes').projects);
+router.get('/project', require('../routes/readRoutes').projects);
 //Add project
-router.post('/project/add', verify.BDM, require('../controller/bdm/add.project.controller'));
+router.post('/project/add', require('../controller/bdm/add.project.controller'));
 //Update Project
-router.post('/project/update', verify.BDM, require('../controller/bdm/update.project.controller'));
+router.post('/project/update', require('../controller/bdm/update.project.controller'));
 // //Delete Project
-router.post('/project/remove', verify.BDM, require('../controller/bdm/remove.project.controller'));
+router.post('/project/remove', require('../controller/bdm/remove.project.controller'));
 // //Set Project Manager
 // router.post('/bdm/project/add', verify.BDM, require('../controller/bdm/add.project.controller'))
 //Track Project Tasks

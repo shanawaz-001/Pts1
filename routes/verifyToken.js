@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
+const Project = require('../models/projectModel');
 //Login verification------------------------------------------------------------------------------------
 module.exports.verifyLogin = async(req,res,next)=>{
     const token = req.header('authorization');
@@ -53,16 +54,14 @@ module.exports.HR = function (req,res,next){
     if(!token) return res.status(401).send({ type:'error',message: 'Access Denied'});
     try {
         const decode = jwt.decode(token);
-        const verified = jwt.verify(token, process.env.SECRETKEY);
         if(decode.designation ==process.env.HR ){
-            req.user = verified;
             next();
         }
         else return res.status(401).send({ type:'error',message: 'Access Denied'});
             
     } catch (error) {
         console.log(error);
-        res.status(400).send({type:'error', message:'Invalid Token'});
+        res.status(400).send({type:'error', message:`can't connect to the server`});
     }
 };
 
@@ -72,16 +71,33 @@ module.exports.BDM = function (req,res,next){
     if(!token) return res.status(401).send({ type:'error',message: 'Access Denied'});
     try {
         const decode = jwt.decode(token);
-        const verified = jwt.verify(token, process.env.SECRETKEY);
         if(decode.designation ==process.env.BDM ){
-            req.user = verified;
             next();
         }
         else return res.status(401).send({ type:'error',message: 'Access Denied'});
             
     } catch (error) {
         console.log(error);
-        res.status(400).send({type:'error', message:'Invalid Token'});
+        res.status(400).send({type:'error', message:`can't connect to the server`});
+    }
+};
+
+//--------------------------PM Verification---------------------------------------------------------------
+module.exports.PM = async (req,res,next)=>{
+    const token = req.header('authorization');
+    if(!token) return res.status(401).send({ type:'error',message: 'Access Denied'});
+    try {
+        const decode = jwt.decode(token);
+        const isManager = await Project.find({managerId: decode.id});
+            
+        if(!isManager) res.status(401).send({type:'error',message: 'Access Denied'})
+            
+        else next();
+        
+            
+    } catch (error) {
+        console.log(error);
+        res.status(400).send({type:'error', message:`can't connect to the server`});
     }
 };
 //--------------------------DEV Verification--------------------------------------------------------------
@@ -90,15 +106,13 @@ module.exports.DEV = function (req,res,next){
     if(!token) return res.status(401).send({ type:'error',message: 'Access Denied'});
     try {
         const decode = jwt.decode(token);
-        const verified = jwt.verify(token, process.env.SECRETKEY);
         if(decode.designation ==process.env.DEV ){
-            req.user = verified;
             next();
         }
         else return res.status(401).send({ type:'error',message: 'Access Denied'});
             
     } catch (error) {
         console.log(error);
-        res.status(400).send({type:'error', message:'Invalid Token'});
+        res.status(400).send({type:'error', message:`can't connect to the server`});
     }
 };

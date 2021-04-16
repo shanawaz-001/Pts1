@@ -4,7 +4,7 @@ const User = require('../models/userModel');
 const Emp = require('../models/employeeModel')
 const router = require("express").Router();
 
-router.post('/login', async (req, res) =>{
+router.post('/', async (req, res) =>{
     const user = await User.findOne({ employeeId: req.body.employeeId});
     
     if(!user) return res.status(400).send({type : 'error', message : 'Invalid Id or password '});
@@ -13,7 +13,7 @@ router.post('/login', async (req, res) =>{
         const validPass = await bcrypt.compare(req.body.password, user.passwordHash);
         if(!validPass) return res.status(400).send({type: 'error', message: 'Invalid Id or Password '});
         else{
-            const token = jwt.sign({employeeId: user.employeeId, designation: emp.designation, password:user.passwordHash}, process.env.SECRETKEY);
+            const token = jwt.sign({id: emp._id,employeeId: user.employeeId, designation: emp.designation, password:user.passwordHash}, process.env.SECRETKEY);
             res.header('authorization', token).send({ token:token, user: emp});
             
         }
