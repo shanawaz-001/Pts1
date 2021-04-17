@@ -1,5 +1,3 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/userModel');
 const Emp = require('../models/employeeModel')
 const Project = require('../models/projectModel')
 //all employees---------------------------------------
@@ -33,3 +31,4 @@ module.exports.empDev = async(req, res)=>{
     .then(data => res.send(data))
     .catch(error => console.error(error))
 }
+

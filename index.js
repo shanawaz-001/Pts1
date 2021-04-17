@@ -34,7 +34,7 @@ app.use('/api/login',require('./routes/authRoutes'));
 app.use('/api/user',verification.verify, require('./routes/userRoutes'));
 app.use('/api/hr',verification.HR,require('./routes/hrRoutes'));
 app.use('/api/bdm',verification.BDM,require('./routes/bdmRoutes'));
-app.use('/api/dev',verification.DEV,require('./routes/devRoutes'));
+app.use('/api',verification.DEV,require('./routes/devRoutes'));
 // app.use('/api/bdm',require('./routes/bdmRoutes'));
 
 app.listen(PORT, ()=> console.log(`Server started on the port: ${PORT}`));

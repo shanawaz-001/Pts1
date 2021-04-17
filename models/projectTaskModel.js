@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const projectTaskSchema = new mongoose.Schema({
-    taskId:{
-        type: String,
-        unique:[true, 'Already exixts'],
-        required: true
-    },
+    // taskId:{
+    //     type: String,
+    //     unique:[true, 'Already exixts'],
+    //     required: true
+    // },
     taskDesc:{
         type: String,
     },
@@ -23,8 +23,7 @@ const projectTaskSchema = new mongoose.Schema({
         default: Date.now
     },
     endDate:{
-        type: Date,
-        required:[true, 'Required end date']
+        type: Date
     },
     status:{
         type: String,

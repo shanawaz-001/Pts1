@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema({
+const projectTeamSchema = new mongoose.Schema({
 
-    taskRef:{
+    projectRef:{
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'ProjectTask',
+        ref: 'Project',
         required: true
     },
     teamLeader: {
@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
         ref: 'Employee',
         required: true
     },
-    teamMemmers: [
+    teamMembers: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Employee',

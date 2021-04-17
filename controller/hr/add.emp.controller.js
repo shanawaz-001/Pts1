@@ -10,7 +10,6 @@ module.exports =  async (req, res)=>{
         const salt = await bcrypt.genSalt();
         const passwordHash = await bcrypt.hash(employeeId, salt);
         Employee.create({
-            "_id": new mongoose.Types.ObjectId(),
             employeeId,
             name,
             email,

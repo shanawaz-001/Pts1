@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 const Project = require('../models/projectModel');
+const Team = require('../models/projectTeamModel');
 //Login verification------------------------------------------------------------------------------------
 module.exports.verifyLogin = async(req,res,next)=>{
     const token = req.header('authorization');
@@ -100,6 +101,26 @@ module.exports.PM = async (req,res,next)=>{
         res.status(400).send({type:'error', message:`can't connect to the server`});
     }
 };
+
+//--------------------------TL Verification---------------------------------------------------------------
+module.exports.TL = async (req,res,next)=>{
+    const token = req.header('authorization');
+    if(!token) return res.status(401).send({ type:'error',message: 'Access Denied'});
+    try {
+        const decode = jwt.decode(token);
+        const isTL = await Team.find({teamLeader: decode.id});
+            
+        if(!isTL) res.status(401).send({type:'error',message: 'Access Denied'})
+            
+        else next();
+        
+            
+    } catch (error) {
+        console.log(error);
+        res.status(400).send({type:'error', message:`can't connect to the server`});
+    }
+};
+
 //--------------------------DEV Verification--------------------------------------------------------------
 module.exports.DEV = function (req,res,next){
     const token = req.header('authorization');
