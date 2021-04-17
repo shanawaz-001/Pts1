@@ -1,5 +1,4 @@
 const Project = require('../../models/projectModel');
-const Employee = require('../../models/employeeModel');
 module.exports = async(req, res)=>{
     try {
         Project.findOneAndUpdate({projectId:req.body.projectId},

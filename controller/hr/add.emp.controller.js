@@ -1,8 +1,6 @@
 const bcrypt = require('bcryptjs');
 const User = require('../../models/userModel');
 const Employee = require('../../models/employeeModel');
-const  mongoose  = require('mongoose');
-
 module.exports =  async (req, res)=>{
     try {
         const { employeeId, name, email, designation} = req.body;

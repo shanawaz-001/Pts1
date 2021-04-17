@@ -1,5 +1,3 @@
-const bcrypt = require('bcryptjs');
-const User = require('../../models/userModel');
 const Employee = require('../../models/employeeModel');
 
 module.exports = async (req, res) =>{

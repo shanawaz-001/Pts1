@@ -1,5 +1,3 @@
-const Employee = require('../../models/employeeModel');
-const Task = require('../../models/projectTaskModel');
 const Team = require('../../models/projectTeamModel');
 
 module.exports = async(req,res)=>{

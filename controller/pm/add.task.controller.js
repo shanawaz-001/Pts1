@@ -1,7 +1,4 @@
-const Employee = require('../../models/employeeModel');
 const Task = require('../../models/projectTaskModel');
-const  mongoose  = require('mongoose');
-
 module.exports = async(req, res)=>{
     const {taskDesc, priority, startDate, endDate, status, projectRef}=req.body;
     try {

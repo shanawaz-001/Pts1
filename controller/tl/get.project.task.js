@@ -1,4 +1,3 @@
-const jwt = require('jsonwebtoken');
 const Task = require('../../models/projectTaskModel');
 
 //assigned projects of pm---------------------------------

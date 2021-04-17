@@ -1,7 +1,5 @@
 const jwt = require('jsonwebtoken');
-const Project = require('../../models/projectModel');
 const Task = require('../../models/projectTaskModel');
-const  mongoose  = require('mongoose');
 
 //assigned projects of pm---------------------------------
 module.exports = async(req, res) =>{
