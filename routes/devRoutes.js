@@ -19,7 +19,7 @@ router.get('/pm/projects',verify.PM, require('../controller/pm/get.assignedProje
 //Add project Task
 router.post('/pm/task/add',verify.PM, require('../controller/pm/add.task.controller'));
 //Update Project Task
-
+router.post('/pm/task/update',verify.PM, require('../controller/pm/update.task.controller'));
 //Delete Project Task 
 
 //Set Project Team - Employee Info 
@@ -32,9 +32,11 @@ router.post('/pm/team/add',verify.PM,require('../controller/pm/add.team.controll
 //********************************************** TL ROUTES ********************************************** */
 //******************************************************************************************************* */
 
-router.get('/tl/team',verify.TL,require('../controller/tl/assign.task.controller'));
-router.get('/tl/projects',verify.TL,require('../controller/tl/get.assigned.projects'));
-router.get('/tl/project/tasks',verify.TL,require('../controller/tl/get.project.task'));
+router.get('/tl/projects',verify.TL,require('../controller/tl/get.projects.controller'));
+router.get('/tl/project/tasks',verify.TL,require('../controller/tl/get.task.controller'));
+router.get('/tl/project/team',verify.TL, require('../controller/tl/get.team.controller'))
+router.get('/tl/project/team/assignTask',verify.TL,require('../controller/tl/assign.task.controller'));
+
 
 
 
