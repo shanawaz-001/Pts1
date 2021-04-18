@@ -35,7 +35,7 @@ router.post('/pm/team/add',verify.PM,require('../controller/pm/add.team.controll
 router.get('/tl/projects',verify.TL,require('../controller/tl/get.projects.controller'));
 router.get('/tl/project/tasks',verify.TL,require('../controller/tl/get.task.controller'));
 router.get('/tl/project/team',verify.TL, require('../controller/tl/get.team.controller'))
-router.get('/tl/project/team/assignTask',verify.TL,require('../controller/tl/assign.task.controller'));
+router.post('/tl/project/team/assignTask',verify.TL,require('../controller/tl/assign.task.controller'));
 
 
 
