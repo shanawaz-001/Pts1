@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 const Team = require('../../models/projectTeamModel');
 
-//assigned projects of pm---------------------------------
 module.exports = async(req, res) =>{
     const token = req.header('authorization');
     const decode = jwt.decode(token);

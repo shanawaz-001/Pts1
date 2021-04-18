@@ -1,11 +1,18 @@
-const jwt = require('jsonwebtoken');
-const Task = require('../../models/projectTaskModel');
+const assignTask = require('../../models/assignTaskModel');
 
-//assigned projects of pm---------------------------------
 module.exports = async(req, res) =>{
-    const token = req.header('authorization');
-    const decode = jwt.decode(token);
-    await Task.find({managerI: decode.id}).sort('projectTitle')
-    .then(data => res.send(data))
-    .catch(error => console.error(error))
+    try {
+        const {devRef, taskRef} = req.body;
+        await assignTask.create({devRef,taskRef},
+            async (err, dt)=>{
+                if(err) return res.status(400).send({type:'error', message: err.message});
+                else{
+                    res.status(200).send({type:'success', message:'Task assigned'})
+                }
+            })
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({type: 'error', message: 'Error while connecting to the server!'});
+    }
+  
 }
