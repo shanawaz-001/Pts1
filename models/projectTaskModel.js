@@ -1,11 +1,6 @@
 const mongoose = require("mongoose");
 
 const projectTaskSchema = new mongoose.Schema({
-    // taskId:{
-    //     type: String,
-    //     unique:[true, 'Already exixts'],
-    //     required: true
-    // },
     taskDesc:{
         type: String,
     },

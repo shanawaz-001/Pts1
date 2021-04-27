@@ -32,9 +32,14 @@ router.post('/pm/team/add',verify.PM,require('../controller/pm/add.team.controll
 //********************************************** TL ROUTES ********************************************** */
 //******************************************************************************************************* */
 
+
+//get assigned projects
 router.get('/tl/projects',verify.TL,require('../controller/tl/get.projects.controller'));
+//get project tasks
 router.get('/tl/project/tasks',verify.TL,require('../controller/tl/get.task.controller'));
+//get assigned team
 router.get('/tl/project/team',verify.TL, require('../controller/tl/get.team.controller'))
+//assign task to team member
 router.post('/tl/project/team/assignTask',verify.TL,require('../controller/tl/assign.task.controller'));
 
 

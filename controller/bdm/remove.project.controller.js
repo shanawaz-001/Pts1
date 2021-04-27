@@ -1,23 +1,30 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Project = require('../../models/projectModel');
+const Task = require('../../models/projectTaskModel');
 const User = require('../../models/userModel');
 module.exports = async (req, res) =>{
     try {
         const token = req.header('authorization');
         const decode = jwt.decode(token);
-        User.findOne({employeeId:decode.employeeId},
+        await User.findOne({employeeId:decode.employeeId},
             async(e,d)=>{
             if(e) console.log(e); 
             else{
                 const validPass = await bcrypt.compare(req.body.password, d.passwordHash);
                 if(!validPass) return res.status(400).send({type:'error', message:'Incorrect Password'});
                 else{
-                    Project.findOneAndDelete(
-                        {projectId:req.body.projectId},
+                      await Project.findByIdAndDelete(
+                        req.body.project_id,
                         async(err,data)=>{
-                        if (err) console.log(err);
-                            res.status(200).send({type: 'success', message: 'project removed:' + req.body.projectId });
+                            if (err) console.log(err);
+                            else{
+                                 await Task.deleteMany({projectRef: req.body.project_id},async(er,dt)=>{
+                                    if(er) console.log(er)
+                                    else res.status(200).send({type: 'success', message: 'project removed:' + req.body.project_id });
+                                
+                                })
+                            }
                         }
                 )}
             }
