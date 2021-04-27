@@ -21,7 +21,7 @@ module.exports = async (req, res) =>{
                             else{
                                  await Task.deleteMany({projectRef: req.body.project_id},async(er,dt)=>{
                                     if(er) console.log(er)
-                                    else res.status(200).send({type: 'success', message: 'project removed:' + req.body.project_id });
+                                    else res.status(200).send({type: 'success', message: 'project removed:' });
                                 
                                 })
                             }
