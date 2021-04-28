@@ -14,10 +14,16 @@ const projectTeamSchema = new mongoose.Schema({
     },
     teamMembers: [
         {
+            devRef:{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Employee',
             required: true
-        }
+            },
+            isAssigned:{
+                type:Boolean,
+                default: 'false'
+            }   
+        },
     ]
 },
 {

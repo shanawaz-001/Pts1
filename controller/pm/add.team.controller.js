@@ -10,7 +10,7 @@ module.exports = async(req,res)=>{
         },async(err,dt)=>{
             if(err) return res.status(400).send({type:'error', message: err.message});
             else{
-                res.status(200).send({type:'success',message:'Task is added to the project'});
+                res.status(200).send({type:'success',message:'Team is added to the project'});
             }
         })
         

@@ -42,7 +42,7 @@ router.post('/changepassword',async (req, res) =>{
 
 //*******************Confirm password********************************************************************** */
 
-router.post('/confirmpassword',async (req, res) =>{
+router.post('/confirm-password',async (req, res) =>{
     try {
         const token = req.header('authorization');
         const decode = jwt.decode(token);
@@ -51,9 +51,9 @@ router.post('/confirmpassword',async (req, res) =>{
             if(e) console.log(e); 
             else{
                 const validPass = await bcrypt.compare(req.body.passwordOld, d.passwordHash);
-                if(!validPass) return res.status(400).send({isconfirm: false});
+                if(!validPass) return res.status(400).send({isConfirm: false});
                 else{
-                    res.send({isconfirm: true})
+                    res.send({isConfirm: true})
                 }
             }
         });

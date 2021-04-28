@@ -38,7 +38,11 @@ router.get('/tl/projects',verify.TL,require('../controller/tl/get.projects.contr
 //get project tasks
 router.get('/tl/project/tasks',verify.TL,require('../controller/tl/get.task.controller'));
 //get assigned team
-router.get('/tl/project/team',verify.TL, require('../controller/tl/get.team.controller'))
+router.get('/tl/project/team',verify.TL, require('../controller/tl/get.team.controller'));
+//get team members task assigned
+router.get('/tl/project/team/assigned',verify.TL, require('../controller/tl/get.assignedMem.controller'));
+//get team members task unassigned
+router.get('/tl/project/team/unassigned',verify.TL, require('../controller/tl/get.unassignedMem.controller'));
 //assign task to team member
 router.post('/tl/project/team/assignTask',verify.TL,require('../controller/tl/assign.task.controller'));
 
