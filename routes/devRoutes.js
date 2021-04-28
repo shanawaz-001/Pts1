@@ -45,6 +45,9 @@ router.get('/tl/project/team/assigned',verify.TL, require('../controller/tl/get.
 router.get('/tl/project/team/unassigned',verify.TL, require('../controller/tl/get.unassignedMem.controller'));
 //assign task to team member
 router.post('/tl/project/team/assignTask',verify.TL,require('../controller/tl/assign.task.controller'));
+//Unassign task to team member
+router.post('/tl/project/team/unassignTask',verify.TL,require('../controller/tl/unassign.task.controller'));
+
 
 
 

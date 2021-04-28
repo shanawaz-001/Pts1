@@ -5,6 +5,7 @@ const projectTeamSchema = new mongoose.Schema({
     projectRef:{
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'Project',
+        unique:[true, 'Already Team exixts to this Project'],
         required: true
     },
     teamLeader: {
