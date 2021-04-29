@@ -77,7 +77,7 @@ router.post('/profile',async (req, res) =>{
             async(e,d)=>{
             if(e) console.log(e); 
             else{
-                res.status(200).send({type:"success",message:"Profile Updated"});
+                res.status(200).send({type:"success",message:"Profile Updated",data:d});
             }
         });
     } catch (error) {
