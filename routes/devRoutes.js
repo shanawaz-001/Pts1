@@ -21,9 +21,15 @@ router.post('/pm/task/add',verify.PM, require('../controller/pm/add.task.control
 //Update Project Task
 router.post('/pm/task/update',verify.PM, require('../controller/pm/update.task.controller'));
 //Delete Project Task 
+router.post('/pm/task/remove',verify.PM, require('../controller/pm/remove.task.controller'));
 
 //Set Project Team - Employee Info 
 router.post('/pm/team/add',verify.PM,require('../controller/pm/add.team.controller'));
+//update Project Team
+
+//remove Project Team
+
+
 //Update Project Tasks % of completion
 
 
@@ -47,6 +53,8 @@ router.get('/tl/project/team/unassigned',verify.TL, require('../controller/tl/ge
 router.post('/tl/project/team/assignTask',verify.TL,require('../controller/tl/assign.task.controller'));
 //Unassign task to team member
 router.post('/tl/project/team/unassignTask',verify.TL,require('../controller/tl/unassign.task.controller'));
+
+//update % of team work completion
 
 
 
