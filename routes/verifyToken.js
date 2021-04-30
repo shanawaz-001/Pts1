@@ -4,32 +4,38 @@ const Project = require('../models/projectModel');
 const Team = require('../models/projectTeamModel');
 const Employee = require('../models/employeeModel');
 //Login verification------------------------------------------------------------------------------------
-module.exports.verifyLogin = async(req,res,next)=>{
+module.exports.verifyLogin = async(req,res)=>{
     const token = req.header('authorization');
-    const decode = jwt.decode(token);
     if(!token) return res.status(401).send({ type:'error',message: 'Access Denied'});
+    else{
+        const decode = jwt.decode(token);
     try {
         const verified = jwt.verify(token, process.env.SECRETKEY);
         if(!verified) return res.status(401).send({ type:'error',message: 'Token Invalid'});
-        const user = await User.findOne({ employeeId: decode.employeeId});
-        const decodePass = decode.password;
-        const userPass = user.passwordHash;  
-        if(decodePass!=userPass){
-            res.send({isLogin:false});
-        } 
         else{
-            await Employee.findOne({employeeId:decode.employeeId},async(e,d)=>{
-                if(e) return res.status(400).send({ type:'error',message: 'Employeed Not found'});
-                else{
-                    res.send({isLogin:true, user:d});
-                }
-            })
-            next(); 
+            const user = await User.findOne({ employeeId: decode.employeeId});
+            if(!user) res.send({type:'error', message: 'User Not found'})
+            else{
+                const decodePass = decode.password;
+                const userPass = user.passwordHash;  
+                if(decodePass!=userPass){
+                    res.send({isLogin:false});
+                }else{
+                    await Employee.findOne({employeeId:decode.employeeId},async(e,d)=>{
+                    if(e) return res.status(400).send({ type:'error',message: 'Employeed Not found'});
+                    else{
+                        res.send({isLogin:true, user:d});
+                    }
+                })
+            }
+            }
+            
         }
       
     } catch (error) {
         res.status(400).send({isLogin:false});
     }
+}
 };
 
 //-------------------------------verify Token-----------------------------------------------------------
@@ -41,13 +47,16 @@ module.exports.verify = async(req,res,next)=>{
         const verified = jwt.verify(token, process.env.SECRETKEY);
         if(!verified) return res.status(401).send({ type:'error',message: 'Token Invalid'});
         const user = await User.findOne({ employeeId: decode.employeeId});
-        const decodePass = decode.password;
-        const userPass = user.passwordHash;  
-        if(decodePass!=userPass){
-            res.status(400).send({type:'error', message:'Please Login token is Invalid'});
-        } 
+        if(!user) res.status(404).send({type:'error', message: 'User Not found'})
         else{
-            next(); 
+            const decodePass = decode.password;
+            const userPass = user.passwordHash;  
+            if(decodePass!=userPass){
+                res.status(400).send({type:'error', message:'Please Login token is Invalid'});
+            } 
+            else{
+                next(); 
+            }
         }
       
     } catch (error) {
@@ -56,16 +65,21 @@ module.exports.verify = async(req,res,next)=>{
 };
 
 //--------------------------HR Verification--------------------------------------------------------------
-module.exports.HR = function (req,res,next){
+module.exports.HR = async(req,res,next)=>{
     const token = req.header('authorization');
     if(!token) return res.status(401).send({ type:'error',message: 'Access Denied'});
     try {
         const decode = jwt.decode(token);
-        if(decode.designation ==process.env.HR ){
-            next();
-        }
-        else return res.status(401).send({ type:'error',message: 'Access Denied'});
-            
+        const user = await User.findOne({employeeId: decode.employeeId},async(err,data)=>{
+            if(err) res.status(401).send({ type:'error',message: 'something went wrong, try again'});
+            else{
+                if(decode.designation ==process.env.HR ){
+                    next();
+                }
+                else return res.status(401).send({ type:'error',message: 'Access Denied'});
+            }
+        });
+        if(!user) res.status(404).send({type: 'error', message: 'User not found'});  
     } catch (error) {
         console.log(error);
         res.status(400).send({type:'error', message:`can't connect to the server`});
@@ -73,16 +87,21 @@ module.exports.HR = function (req,res,next){
 };
 
 //--------------------------BDM Verification--------------------------------------------------------------
-module.exports.BDM = function (req,res,next){
+module.exports.BDM = async(req,res,next)=>{
     const token = req.header('authorization');
     if(!token) return res.status(401).send({ type:'error',message: 'Access Denied'});
     try {
         const decode = jwt.decode(token);
-        if(decode.designation ==process.env.BDM ){
-            next();
-        }
-        else return res.status(401).send({ type:'error',message: 'Access Denied'});
-            
+        const user = await User.findOne({employeeId: decode.employeeId},async(err,data)=>{
+            if(err) res.status(401).send({ type:'error',message: 'something went wrong, try again'});
+            else{
+                if(decode.designation ==process.env.BDM ){
+                    next();
+                }
+                else return res.status(401).send({ type:'error',message: 'Access Denied'});
+            }
+        });
+        if(!user) res.status(404).send({type: 'error', message: 'User not found'});  
     } catch (error) {
         console.log(error);
         res.status(400).send({type:'error', message:`can't connect to the server`});
@@ -95,12 +114,17 @@ module.exports.PM = async (req,res,next)=>{
     if(!token) return res.status(401).send({ type:'error',message: 'Access Denied'});
     try {
         const decode = jwt.decode(token);
-        const isManager = await Project.find({managerId: decode.id});
+        const user = await User.findOne({employeeId: decode.employeeId},async(err,data)=>{
+            if(err) res.status(401).send({ type:'error',message: 'something went wrong, try again'});
+            else{
+                const isManager = await Project.find({managerId: decode.id});
             
-        if(!isManager) res.status(401).send({type:'error',message: 'Access Denied'})
-            
-        else next();
-        
+                if(!isManager) res.status(401).send({type:'error',message: 'Access Denied'})
+                    
+                else next();
+            }
+        });
+        if(!user) res.status(404).send({type: 'error', message: 'User not found'});
             
     } catch (error) {
         console.log(error);
@@ -114,13 +138,17 @@ module.exports.TL = async (req,res,next)=>{
     if(!token) return res.status(401).send({ type:'error',message: 'Access Denied'});
     try {
         const decode = jwt.decode(token);
-        const isTL = await Team.find({teamLeader: decode.id});
+        const user = await User.findOne({employeeId: decode.employeeId},async(err,data)=>{
+            if(err) res.status(401).send({ type:'error',message: 'something went wrong, try again'});
+            else{
+                const isTL = await Team.find({teamLeader: decode.id});
             
-        if(!isTL) res.status(401).send({type:'error',message: 'Access Denied'})
-            
-        else next();
-        
-            
+                if(!isTL) res.status(401).send({type:'error',message: 'Access Denied'})
+                    
+                else next();
+            }
+        });
+        if(!user) res.status(404).send({type: 'error', message: 'User not found'});     
     } catch (error) {
         console.log(error);
         res.status(400).send({type:'error', message:`can't connect to the server`});
@@ -128,16 +156,21 @@ module.exports.TL = async (req,res,next)=>{
 };
 
 //--------------------------DEV Verification--------------------------------------------------------------
-module.exports.DEV = function (req,res,next){
+module.exports.DEV = async(req,res,next)=>{
     const token = req.header('authorization');
     if(!token) return res.status(401).send({ type:'error',message: 'Access Denied'});
     try {
         const decode = jwt.decode(token);
-        if(decode.designation ==process.env.DEV ){
-            next();
-        }
-        else return res.status(401).send({ type:'error',message: 'Access Denied'});
-            
+        const user = await User.findOne({employeeId: decode.employeeId},async(err,data)=>{
+            if(err) res.status(401).send({ type:'error',message: 'something went wrong, try again'});
+            else{
+                if(decode.designation ==process.env.DEV ){
+                    next();
+                }
+                else return res.status(401).send({ type:'error',message: 'Access Denied'});
+            }
+        });
+        if(!user) res.status(404).send({type: 'error', message: 'User not found'});  
     } catch (error) {
         console.log(error);
         res.status(400).send({type:'error', message:`can't connect to the server`});
