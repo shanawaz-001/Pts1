@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 const Project = require('../models/projectModel');
 const Team = require('../models/projectTeamModel');
+const Employee = require('../models/employeeModel');
 //Login verification------------------------------------------------------------------------------------
 module.exports.verifyLogin = async(req,res,next)=>{
     const token = req.header('authorization');
@@ -17,7 +18,12 @@ module.exports.verifyLogin = async(req,res,next)=>{
             res.send({isLogin:false});
         } 
         else{
-            res.send({isLogin:true});
+            await Employee.findOne({employeeId:decode.employeeId},async(e,d)=>{
+                if(e) return res.status(400).send({ type:'error',message: 'Employeed Not found'});
+                else{
+                    res.send({isLogin:true, user:d});
+                }
+            })
             next(); 
         }
       
