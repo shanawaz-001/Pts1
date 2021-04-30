@@ -11,4 +11,6 @@ router.post('/emp/update', require('../controller/hr/update.emp.controller'));
 router.post('/emp/remove', require('../controller/hr/remove.emp.controller'));
 //active Employee--------
 router.post('/emp/active', require('../controller/hr/active.emp.controller'));
+//View Projects----------
+router.get('/projects',require('../routes/readRoutes').projects);
 module.exports = router;
