@@ -72,7 +72,7 @@ module.exports.HR = async(req,res,next)=>{
         const decode = jwt.decode(token);
         const user = await User.findOne({employeeId: decode.employeeId},async(err,data)=>{
             if(err) res.status(401).send({ type:'error',message: 'something went wrong, try again'});
-            else{
+            if(user){
                 if(decode.designation ==process.env.HR ){
                     next();
                 }
