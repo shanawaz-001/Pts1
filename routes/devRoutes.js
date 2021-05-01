@@ -26,7 +26,7 @@ router.post('/pm/task/remove',verify.PM, require('../controller/pm/remove.task.c
 //Set Project Team - Employee Info 
 router.post('/pm/team/add',verify.PM,require('../controller/pm/add.team.controller'));
 //update Project Team
-
+router.post('/pm/team/update',verify.PM,require('../controller/pm/update.team.controller'));
 //remove Project Team
 
 

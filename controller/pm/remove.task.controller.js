@@ -8,9 +8,7 @@ module.exports = async(req, res)=>{
                 const assignedTask = await assignTask.findOneAndDelete({taskRef: req.body.id})
                 .exec((e,d)=>{
                     if(e) return res.status(400).send({type:'error',message: e.message});
-                    else{
-                        return res.status(200).send({type:'success',message:'Task Deleted'});
-                    }
+                    return res.status(200).send({type:'success',message:'Task Deleted'});
                 })
             }
         })

@@ -12,6 +12,8 @@ router.post('/project/remove', require('../controller/bdm/remove.project.control
 // //Set Project Manager
 // router.post('/bdm/project/add', verify.BDM, require('../controller/bdm/add.project.controller'))
 //Track Project Tasks
+
+
 module.exports = router;
 
 

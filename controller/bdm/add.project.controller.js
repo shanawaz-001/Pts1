@@ -13,9 +13,7 @@ module.exports = async(req, res)=>{
             }
             ,async(error,data)=>{
                 if(error) return res.status(400).send({type:'error',message: error});
-                else{
-                    return res.status(200).send({type:'success',message:'Project Added'});
-                }
+                return res.status(200).send({type:'success',message:'Project Added'});
             }
             
         )

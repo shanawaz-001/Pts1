@@ -11,9 +11,7 @@ module.exports = async(req, res)=>{
             projectRef   
         },async(er,dt)=>{
             if(er) return res.status(400).send({type:'error',message: er.message});
-            else{
-                return res.status(200).send({type:'success',message:'Task Added'});
-            }
+            return res.status(200).send({type:'success',message:'Task Added'});
         })
     } catch (error) {
         console.error(error);
