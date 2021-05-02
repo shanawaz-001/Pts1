@@ -72,10 +72,10 @@ module.exports.HR = async(req,res,next)=>{
         const decode = jwt.decode(token);
         const user = await User.findOne({employeeId: decode.employeeId},async(err,data)=>{
             if(err) res.status(401).send({ type:'error',message: 'something went wrong, try again'});
-            if(user && decode.designation ==process.env.HR ){
-                next();
-            }
         });
+        if(user && decode.designation ==process.env.HR ){
+            next();
+        }
         if(!user) res.status(404).send({type: 'error', message: 'User not found'});  
     } catch (error) {
         console.log(error);
@@ -91,10 +91,10 @@ module.exports.BDM = async(req,res,next)=>{
         const decode = jwt.decode(token);
         const user = await User.findOne({employeeId: decode.employeeId},async(err,data)=>{
             if(err) res.status(401).send({ type:'error',message: 'something went wrong, try again'});
-            if(user && decode.designation ==process.env.BDM ){
-                next();
-            }
         });
+        if(user && decode.designation ==process.env.BDM ){
+            next();
+        }
         if(!user) res.status(404).send({type: 'error', message: 'User not found'});  
     } catch (error) {
         console.log(error);
@@ -110,15 +110,15 @@ module.exports.PM = async (req,res,next)=>{
         const decode = jwt.decode(token);
         const user = await User.findOne({employeeId: decode.employeeId},async(err,data)=>{
             if(err) res.status(401).send({ type:'error',message: 'something went wrong, try again'});
-            if(user){
-                const isManager = await Project.find({managerId: decode.id});
-            
-                if(isManager){next();}
-                else{
-                    res.status(401).send({type:'error',message: 'Access Denied'})
-                }
-            }
         });
+        if(user){
+            const isManager = await Project.find({managerId: decode.id});
+        
+            if(isManager){next();}
+            else{
+                res.status(401).send({type:'error',message: 'Access Denied'})
+            }
+        }
         if(!user) res.status(404).send({type: 'error', message: 'User not found'});
             
     } catch (error) {
@@ -162,10 +162,10 @@ module.exports.DEV = async(req,res,next)=>{
         const decode = jwt.decode(token);
         const user = await User.findOne({employeeId: decode.employeeId},async(err,data)=>{
             if(err) res.status(401).send({ type:'error',message: 'something went wrong, try again'});
-            if(user && decode.designation ==process.env.DEV ){
-                next();
-            }
         });
+        if(user && decode.designation ==process.env.DEV ){
+            next();
+        }
         if(!user) res.status(404).send({type: 'error', message: 'User not found'});  
     } catch (error) {
         console.log(error);
