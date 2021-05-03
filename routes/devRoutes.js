@@ -2,10 +2,10 @@ const router = require("express").Router();
 const verify = require('../routes/verifyToken');
 
 //confirmation
-router.get('/dev',require('../controller/dev.confirmation.controller'));
+router.get('/dev',require('../controller/dev/get.confirmation.controller'));
 
 //View assigned Projects
-
+router.get('/dev/projects',require('../controller/dev/get.assignedProjects.controller'));
 //View assigned Project Tasks
 
 

@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
-const Team = require('../models/projectTeamModel');
-const Project = require('../models/projectModel');
+const Team = require('../../models/projectTeamModel');
+const Project = require('../../models/projectModel');
 module.exports = async(req,res)=>{
     const token = req.header('authorization');
     try {
