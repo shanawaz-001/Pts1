@@ -4,7 +4,7 @@ const assignTaskSchema = new mongoose.Schema({
 
     taskRef:{
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'ProjetTask',
+        ref: 'ProjectTask',
         unique:[true, 'Already assigned to other developer'],
         required: true
     },
