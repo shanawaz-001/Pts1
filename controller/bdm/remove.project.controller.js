@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Project = require('../../models/projectModel');
+const Team = require('../../models/projectTeamModel');
 const Task = require('../../models/projectTaskModel');
 const User = require('../../models/userModel');
 module.exports = async (req, res) =>{
@@ -21,7 +22,12 @@ module.exports = async (req, res) =>{
                             else{
                                  await Task.deleteMany({projectRef: req.body.project_id},async(er,dt)=>{
                                     if(er) console.log(er)
-                                    else res.status(200).send({type: 'success', message: 'project removed:' });
+                                    else {
+                                        await Team.deleteOne({projectRef: req.body.project_id},async(error,data)=>{
+                                            if(error) console.log(error)
+                                            else res.status(200).send({type: 'success', message: 'project removed:' });
+                                        })
+                                    }
                                 
                                 })
                             }
