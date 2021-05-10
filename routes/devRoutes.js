@@ -14,7 +14,7 @@ router.get('/dev/tasks',require('../controller/dev/get.assignedTasks.controller'
 //******************************************************************************************************* */
 
 //View Employee
-router.get('/pm/emp',verify.PM, require('../routes/readRoutes').empDev);
+router.get('/pm/emp',verify.PM, require('../routes/readRoutes').empActive);
 
 //View assigned Projects
 router.get('/pm/projects',verify.PM, require('../controller/pm/get.assignedProjects.controller'));
@@ -29,6 +29,8 @@ router.post('/pm/task/remove',verify.PM, require('../controller/pm/remove.task.c
 
 //Set Project Team - Employee Info 
 router.post('/pm/team/add',verify.PM,require('../controller/pm/add.team.controller'));
+//View Project Team
+router.get('/pm/teams',verify.PM, require('../routes/readRoutes').projectTeams);
 //update Project Team
 router.post('/pm/team/update',verify.PM,require('../controller/pm/update.team.controller'));
 //remove Project Team

@@ -1,6 +1,7 @@
 const Emp = require('../models/employeeModel')
 const Project = require('../models/projectModel')
 const Task = require('../models/projectTaskModel');
+const Team = require('../models/projectTeamModel');
 //all employees---------------------------------------
 module.exports.empActive = async(req, res)=>{
     await Emp.find({status: process.env.ACTIVE}).sort('employeeId')
@@ -35,6 +36,12 @@ module.exports.empDev = async(req, res)=>{
 //Project Tasks-------------------------------------------
 module.exports.projectTasks = async(req, res)=>{
     await Task.find({projectRef: req.body.projectRef})
+    .then(data => res.send(data))
+    .catch(error => console.error(error))
+}
+//View Teams-----------------------------------------------
+module.exports.projectTeams = async(req, res)=>{
+    await Team.find({projectRef: req.body.projectRef})
     .then(data => res.send(data))
     .catch(error => console.error(error))
 }
