@@ -18,6 +18,8 @@ router.get('/pm/emp',verify.PM, require('../routes/readRoutes').empDev);
 
 //View assigned Projects
 router.get('/pm/projects',verify.PM, require('../controller/pm/get.assignedProjects.controller'));
+//View Project Tasks
+router.get('/pm/tasks',verify.PM, require('../routes/readRoutes').projectTasks);
 //Add project Task
 router.post('/pm/task/add',verify.PM, require('../controller/pm/add.task.controller'));
 //Update Project Task
@@ -44,7 +46,7 @@ router.post('/pm/team/update',verify.PM,require('../controller/pm/update.team.co
 //get assigned projects
 router.get('/tl/projects',verify.TL,require('../controller/tl/get.projects.controller'));
 //get project tasks
-router.get('/tl/project/tasks',verify.TL,require('../controller/tl/get.task.controller'));
+router.get('/tl/project/tasks',verify.TL,require('../routes/readRoutes').projectTasks);
 //get assigned team
 router.get('/tl/project/team',verify.TL, require('../controller/tl/get.team.controller'));
 //get team members task assigned
