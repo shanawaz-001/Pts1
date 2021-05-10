@@ -2,12 +2,12 @@ const router = require("express").Router();
 const verify = require('../routes/verifyToken');
 
 //confirmation
-router.get('/dev',require('../controller/dev/get.confirmation.controller'));
+router.get('/dev',require('../routes/readRoutes').confirmationDev);
 
 //View assigned Projects
-router.get('/dev/projects',require('../controller/dev/get.assignedProjects.controller'));
+router.get('/dev/projects',require('../routes/readRoutes').projectsDev);
 //View assigned Project Tasks
-router.get('/dev/tasks',require('../controller/dev/get.assignedTasks.controller'));
+router.get('/dev/tasks',require('../routes/readRoutes').tasksDev);
 
 //******************************************************************************************************* */
 //********************************************** PM ROUTES ********************************************** */
@@ -17,7 +17,7 @@ router.get('/dev/tasks',require('../controller/dev/get.assignedTasks.controller'
 router.get('/pm/emp',verify.PM, require('../routes/readRoutes').empActive);
 
 //View assigned Projects
-router.get('/pm/projects',verify.PM, require('../controller/pm/get.assignedProjects.controller'));
+router.get('/pm/projects',verify.PM, require('../routes/readRoutes').projectsPM);
 //View Project Tasks
 router.get('/pm/tasks',verify.PM, require('../routes/readRoutes').projectTasks);
 //Add project Task
@@ -46,15 +46,15 @@ router.post('/pm/team/update',verify.PM,require('../controller/pm/update.team.co
 
 
 //get assigned projects
-router.get('/tl/projects',verify.TL,require('../controller/tl/get.projects.controller'));
+router.get('/tl/projects',verify.TL,require('../routes/readRoutes').projectsTL);
 //get project tasks
 router.get('/tl/project/tasks',verify.TL,require('../routes/readRoutes').projectTasks);
 //get assigned team
-router.get('/tl/project/team',verify.TL, require('../controller/tl/get.team.controller'));
+router.get('/tl/project/team',verify.TL, require('../routes/readRoutes').projectTeams);
 //get team members task assigned
-router.get('/tl/project/team/assigned',verify.TL, require('../controller/tl/get.assignedMem.controller'));
+router.get('/tl/project/team/assigned',verify.TL, require('../routes/readRoutes').assignedTeamMem);
 //get team members task unassigned
-router.get('/tl/project/team/unassigned',verify.TL, require('../controller/tl/get.unassignedMem.controller'));
+router.get('/tl/project/team/unassigned',verify.TL, require('../routes/readRoutes').unassignedTeamMem);
 //assign task to team member
 router.post('/tl/project/team/assignTask',verify.TL,require('../controller/tl/assign.task.controller'));
 //Unassign task to team member
