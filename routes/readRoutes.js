@@ -31,7 +31,7 @@ module.exports.projects = async(req, res) =>{
 
 //All developers----------------------------------------
 module.exports.empDev = async(req, res)=>{
-    await Emp.find({designation: process.env.DEV}).sort('employeeId')
+    await Emp.find({status: process.env.ACTIVE,designation: process.env.DEV}).sort('employeeId')
     .then(data => res.send(data))
     .catch(error => console.error(error))
 }

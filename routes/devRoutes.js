@@ -14,7 +14,7 @@ router.get('/dev/tasks',require('../routes/readRoutes').tasksDev);
 //******************************************************************************************************* */
 
 //View Employee
-router.get('/pm/emp',verify.PM, require('../routes/readRoutes').empActive);
+router.get('/pm/emp',verify.PM, require('../routes/readRoutes').empDev);
 
 //View assigned Projects
 router.get('/pm/projects',verify.PM, require('../routes/readRoutes').projectsPM);
