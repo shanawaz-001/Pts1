@@ -37,13 +37,13 @@ module.exports.empDev = async(req, res)=>{
 }
 //Project Tasks-------------------------------------------
 module.exports.projectTasks = async(req, res)=>{
-    await Task.find({projectRef: req.body.projectRef})
+    await Task.find({projectRef: req.params.projectRef})
     .then(data => res.send(data))
     .catch(error => console.error(error))
 }
 //View Teams-----------------------------------------------
 module.exports.projectTeams = async(req, res)=>{
-    await Team.find({projectRef: req.body.projectRef})
+    await Team.find({projectRef: req.params.projectRef})
     .then(data => res.send(data))
     .catch(error => console.error(error))
 }
@@ -68,7 +68,7 @@ module.exports.projectsTL = async(req, res) =>{
 //assigned Team Members of TL------------------------------------
 module.exports.assignedTeamMem = async(req, res) =>{
     try {
-        const task = await Task.find({projectRef: req.body.projectRef},async(er,dt)=>{
+        const task = await Task.find({projectRef: req.params.projectRef},async(er,dt)=>{
             if(er) res.status(400).send({type: 'warn', message: 'No Tasks'});
             else{
                 await assignedTask.find({taskRef:{$in: dt}}).populate('devRef','name')
@@ -90,7 +90,7 @@ module.exports.assignedTeamMem = async(req, res) =>{
 //get team members task unassigned TL -----------------------------------------
 module.exports.unassignedTeamMem = async(req, res) =>{
     try {
-      team =  await Team.find({projectRef: req.body.projectRef}).populate('teamMembers','_id');
+      team =  await Team.find({projectRef: req.params.projectRef}).populate('teamMembers','_id');
       if(!team) res.status(500).send({type: 'warn', message: 'No Tasks'});
       else{
           var teamMem
