@@ -1,6 +1,6 @@
 const Task = require('../../models/projectTaskModel');
 module.exports = async(req, res)=>{
-    const {taskDesc, priority, startDate, endDate, status, projectRef}=req.body;
+    const {taskDesc, priority, createdDate, last_update,doc, status, projectRef}=req.body;
     try {
         Task.create({
             taskDesc,
