@@ -5,9 +5,10 @@ module.exports = async(req, res)=>{
         Task.create({
             taskDesc,
             priority,
-            startDate,
-            endDate,
             status,
+            createdDate,
+            last_update,
+            doc,
             projectRef   
         },async(er,dt)=>{
             if(er) return res.status(400).send({type:'error',message: er.message});
