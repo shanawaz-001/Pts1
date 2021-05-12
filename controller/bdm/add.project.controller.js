@@ -1,6 +1,6 @@
 const Project = require('../../models/projectModel');
 module.exports = async(req, res)=>{
-    const {projectId,projectTitle,projectDesc,managerId,startDate,endDate}=req.body;
+    const {projectId,projectTitle,projectDesc,managerId,startDate,endDate,last_update,doc}=req.body;
     try {
         Project.create(
             {
@@ -9,6 +9,8 @@ module.exports = async(req, res)=>{
                 projectDesc,
                 managerId,
                 startDate,
+                last_update,
+                doc,
                 endDate
             }
             ,async(error,data)=>{

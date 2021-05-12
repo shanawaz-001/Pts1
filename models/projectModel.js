@@ -22,6 +22,13 @@ const projectSchema = new mongoose.Schema({
         required:[true, ''],
         default:Date.now
     },
+    last_update:{
+        type: Date,
+        default: Date.now
+    },
+    doc:{
+        type: Date
+    },
     endDate:{
         type: Date,
         default:''
