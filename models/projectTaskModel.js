@@ -7,27 +7,31 @@ const projectTaskSchema = new mongoose.Schema({
     priority:{
         type:String,
         validate:{
-            validator: value =>[ 'Low', 'Normal', 'High'].includes(value),
+            validator: value =>[ 'LOW', 'NORMAL', 'HIGH'].includes(value),
             message: 'Invalid Priority'
         },
-        default: 'Normal'
-    },
-    startDate:{
-        type: Date,
-        required:[true, ''],
-        default: Date.now
-    },
-    endDate:{
-        type: Date
+        default: 'NORMAL'
     },
     status:{
         type: String,
         required: true,
         validate: {
-            validator: value => ["Not started","Active","On-hold","Completed"].includes(value),
+            validator: value => ["NOT_STARTED","ACTIVE","ON_HOLD","COMPLETED","BACKLOG"].includes(value),
             message: 'Invalid Status'
           },
-          default: 'Not started'
+          default: 'NOT_STARTED'
+    },
+    createdDate:{
+        type: Date,
+        required:[true, ''],
+        default: Date.now
+    },
+    last_update:{
+        type: Date,
+        default: Date.now
+    },
+    doc:{
+        type: Date
     },
     projectRef:{
         type: mongoose.Schema.Types.ObjectId, 
